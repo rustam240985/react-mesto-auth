@@ -1,0 +1,13 @@
+.header__link {
+  all: unset;
+  color: inherit;
+  font-weight: 400;
+  font-size: inherit;
+  line-height: 1.22;
+  text-align: right;
+  cursor: pointer;
+}
+
+.header__link:hover {
+  opacity: 0.6;
+}
