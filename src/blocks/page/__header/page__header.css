@@ -2,8 +2,9 @@
   margin-bottom: 40px;
 }
 
-@media screen and (max-width: 740px) {
+@media screen and (max-width: 940px) {
   .page__header {
     margin-bottom: 42px;
+    padding: 0 30px;
   }
 }

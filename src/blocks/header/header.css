@@ -6,6 +6,12 @@
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
 
+.header__row {
+  display: flex;
+  justify-content: space-between;
+  flex: 1 1 auto;
+}
+
 @media screen and (max-width: 425px) {
   .header {
     min-height: 56px;
