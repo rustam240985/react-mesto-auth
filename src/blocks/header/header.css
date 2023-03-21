@@ -1,16 +1,18 @@
 .header {
   display: flex;
+  justify-content: space-between;
   box-sizing: border-box;
   min-height: 74px;
   margin: 0 auto;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  transition: all 0.3s ease-in;
 }
 
-.header__row {
+/* .header__row {
   display: flex;
   justify-content: space-between;
   flex: 1 1 auto;
-}
+} */
 
 @media screen and (max-width: 425px) {
   .header {

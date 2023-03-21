@@ -7,13 +7,13 @@
   padding: 0;
 }
 
-.header__togle-sidebar_active {
+/* .header__togle-sidebar_active {
   display: none;
 }
 
 .header__togle-sidebar_disactive {
   display: none;
-}
+} */
 
 .header__icon {
   display: flex;
@@ -78,11 +78,11 @@
   transition: top 0.2s linear, transform 0.2s ease-in 0.2s;
 }
 
-.header__row {
+/* .header__row {
   display: flex;
   justify-content: space-between;
   width: 100%;
-}
+} */
 
 
 @media screen and (max-width: 420px) {
