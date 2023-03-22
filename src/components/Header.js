@@ -1,55 +1,49 @@
-import { useEffect, useState, useContext } from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { Link, useRoutes } from "react-router-dom";
 import { AppContext } from '../contexts/AppContext';
 
 function Header() {
-  const [isActiveIcon, setActiveIcon] = useState(false);
-  const [path, setPath] = useState('/sign-up');
-  const [linkText, setLinkText] = useState('');
+  const [isActiveSidebar, setActiveSidebar] = useState(false);
   const contextApp = useContext(AppContext);
-  const location = useLocation();
 
   useEffect(() => {
-    setActiveIcon(false);
-  }, [])
+    setActiveSidebar(false);
+  }, [contextApp.loggedIn])
 
-  useEffect(() => {
-    if (location.pathname === '/sign-up') {
-      setPath('/sign-in');
-      setLinkText('Войти')
-    }
-    else {
-      setPath('/sign-up');
-      setLinkText('Регистрация')
-    }
-  }, [location]);
-
-  function handleClickSignOut(e) {
+  function handleSignOut(e) {
     e.preventDefault();
-    contextApp.signOut();
+    contextApp.handleClickSignOut();
   }
 
-  function handleClickSidebar(e) {
-    setActiveIcon(!isActiveIcon);
+  function handleClickBurger(e) {
+    setActiveSidebar(!isActiveSidebar);
   }
+
+  const headerLink = useRoutes([
+    {
+      path: "/sign-up",
+      element: <Link className="header__link" to="/sign-in">Войти</Link>
+    },
+    {
+      path: "/sign-in",
+      element: <Link className="header__link" to="/sign-up">Регистрация</Link>
+    }
+  ]);
 
   return (
-    <header className={`header page__header ${isActiveIcon && contextApp.loggedIn && 'header__sidebar'}`}>
-
+    <header className={`header page__header ${isActiveSidebar && contextApp.loggedIn && 'header__sidebar'}`}>
       <a href="#" className="header__logo"></a>
-      <button className={`header__togle-sidebar ${contextApp.loggedIn ? 'header__togle-sidebar_active' : ''}`} onClick={handleClickSidebar}>
-        <div className="header__icon">
-          <span className={`header__icon-line-top ${isActiveIcon ? 'header__icon-line-top_active' : ''}`} />
-          <span className={`header__icon-line-middle  ${isActiveIcon ? 'header__icon-line-middle_active' : ''}`} />
-          <span className={`header__icon-line-bottom  ${isActiveIcon ? 'header__icon-line-bottom_active' : ''}`} />
+      <button className={`header__toggle-sidebar ${contextApp.loggedIn ? 'header__toggle-sidebar_active' : ''}`} onClick={handleClickBurger}>
+        <div className="header__btn">
+          <span className={`header__btn-line line-top ${isActiveSidebar ? 'line-top_active' : ''}`} />
+          <span className={`header__btn-line line-middle  ${isActiveSidebar ? 'line-middle_active' : ''}`} />
+          <span className={`header__btn-line line-bottom  ${isActiveSidebar ? 'line-bottom_active' : ''}`} />
         </div>
       </button>
-
-      {contextApp.loggedIn ? '' : <Link className="header__link" to={path}>{linkText}</Link>}
-
-      {contextApp.loggedIn && <div className={`header__menu ${isActiveIcon ? 'header__menu_active' : ''} `}>
+      {headerLink}
+      {contextApp.loggedIn && <div className={`header__menu ${isActiveSidebar ? 'header__menu_active' : ''} `}>
         <span className="header__email">{contextApp.email}</span>
-        {!contextApp.loggedIn ? '' : <button className="header__btn-out" type="text" onClick={handleClickSignOut}>Выйти</button>}
+        <button className="header__btn-out" type="text" onClick={handleSignOut}>Выйти</button>
       </div>}
     </header>
   )

@@ -8,12 +8,6 @@
   transition: all 0.3s ease-in;
 }
 
-/* .header__row {
-  display: flex;
-  justify-content: space-between;
-  flex: 1 1 auto;
-} */
-
 @media screen and (max-width: 425px) {
   .header {
     min-height: 56px;

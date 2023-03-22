@@ -15,7 +15,7 @@ const InfoTooltip = ({ isOpen, onClose, message }) => {
   return (
     <div className={`popup popup-info ${isOpen ? 'popup_opened' : ''}`} onMouseDown={closePopup}>
       <div className="popup__container popup-info__container">
-        {contextApp.isOkay ? <img src={yes} /> : <img src={error} />}
+        {contextApp.isRegistered ? <img src={yes} /> : <img src={error} />}
         <h2 className="popup__title popup-info__title">{message}</h2>
         <button className="popup__close" type="button" aria-label="Закрыть" onClick={onClose}></button>
       </div>

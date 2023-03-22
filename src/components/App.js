@@ -17,6 +17,7 @@ import Register from './Register';
 import * as auth from '../auth.js';
 import { AppContext } from '../contexts/AppContext';
 import InfoTooltip from './InfoTooltip';
+import PageNotFound from './PageNotFound';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -102,7 +103,7 @@ function App() {
       })
   }
 
-  function signOut() {
+  function handleClickSignOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
     setEmail('');
@@ -198,7 +199,7 @@ function App() {
   }
 
   return (
-    <AppContext.Provider value={{ loggedIn, email, signOut, setRegistered }}>
+    <AppContext.Provider value={{ loggedIn, email, handleClickSignOut, isRegistered }}>
       <CurrentUserContext.Provider value={currentUser}>
         <CardContext.Provider value={cards}>
           <div className="page">
@@ -209,6 +210,7 @@ function App() {
                   element={<ProtectedRouteElement element={Main} loggedIn={loggedIn} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />} />
                 <Route path="/sign-up" element={<Register onRegister={handleRegister} />} />
                 <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
+                <Route path="*" element={<PageNotFound />} />
               </Routes>
               {loggedIn && <Footer />}
             </div>
