@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { CardContext } from '../contexts/CardContext';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 
 import api from '../utils/Api';
 import Footer from './Footer';
@@ -14,7 +14,7 @@ import AddPlacePopup from './AddPlacePopup';
 import ProtectedRouteElement from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
-import * as auth from '../auth.js';
+import * as auth from '../utils/auth.js';
 import { AppContext } from '../contexts/AppContext';
 import InfoTooltip from './InfoTooltip';
 import PageNotFound from './PageNotFound';

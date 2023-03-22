@@ -6,6 +6,7 @@
   line-height: 1.22;
   text-align: right;
   cursor: pointer;
+  transition: opacity .6s ease-in;
 }
 
 .header__link:hover {

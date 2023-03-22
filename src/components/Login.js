@@ -1,10 +1,6 @@
-import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import * as auth from '../auth.js';
-import { AppContext } from '../contexts/AppContext';
+import React, { useState } from 'react';
 
 const Login = ({ onLogin }) => {
-  const contextApp = useContext(AppContext);
 
   const [formValue, setFormValue] = useState({
     email: '',

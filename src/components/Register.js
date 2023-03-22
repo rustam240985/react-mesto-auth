@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import * as auth from '../auth.js';
+import { Link } from 'react-router-dom';
 
 const Register = ({ onRegister }) => {
   const [formValue, setFormValue] = useState({
     email: '',
     password: ''
   })
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
