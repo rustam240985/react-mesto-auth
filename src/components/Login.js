@@ -16,7 +16,7 @@ const Login = ({ onLogin }) => {
     });
   }
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     onLogin(formValue);
   }

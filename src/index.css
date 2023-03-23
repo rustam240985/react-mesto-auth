@@ -69,3 +69,6 @@
 @import url('./blocks/line-bottom/_active/line-bottom_active.css');
 @import url('./blocks/line-middle/line-middle.css');
 @import url('./blocks/line-middle/_active/line-middle_active.css');
+@import url('./blocks/not-found/not-found.css');
+@import url('./blocks/not-found/__title/not-found__title.css');
+@import url('./blocks/button/_type/button_type_to-main.css');

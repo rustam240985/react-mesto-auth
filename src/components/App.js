@@ -207,7 +207,7 @@ function App() {
               <Header />
               <Routes>
                 <Route path="/"
-                  element={<ProtectedRouteElement element={Main} loggedIn={loggedIn} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />} />
+                  element={<ProtectedRouteElement element={Main} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />} />
                 <Route path="/sign-up" element={<Register onRegister={handleRegister} />} />
                 <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
                 <Route path="*" element={<PageNotFound />} />
