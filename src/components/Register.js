@@ -29,7 +29,7 @@ const Register = ({ onRegister }) => {
       <form onSubmit={handleSubmit} className="sign__form">
         <input className='sign__input' id="email" name="email" type="email" placeholder='Email' value={formValue.email} onChange={handleChange} />
         <input className='sign__input' id="password" name="password" type="password" placeholder='Пароль' value={formValue.password} onChange={handleChange} />
-        <button type="submit" onSubmit={handleSubmit} className="sign__link">Зарегистрироваться</button>
+        <button type="submit" className="sign__link">Зарегистрироваться</button>
       </form>
       <div className="sign__sign-in">
         <span>Уже зарегистрированы? </span>

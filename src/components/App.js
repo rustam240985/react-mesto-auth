@@ -50,16 +50,34 @@ function App() {
     handleTokenCheck();
   }, [])
 
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard.isOpen
+
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if (evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if (isOpen) {
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen])
+
   const handleTokenCheck = () => {
-    if (localStorage.getItem('jwt')) {
-      const jwt = localStorage.getItem('jwt');
-      auth.checkToken(jwt).then((res) => {
-        if (res) {
-          setEmail(res.data.email)
-          setLoggedIn(true);
-          navigate("/", { replace: true })
-        }
-      });
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.checkToken(jwt)
+        .then((res) => {
+          if (res) {
+            setEmail(res.data.email)
+            setLoggedIn(true);
+            navigate("/", { replace: true })
+          }
+        })
+        .catch(err => console.log(err))
     }
   }
 
@@ -75,24 +93,19 @@ function App() {
           setEmail(formValue.email);
           return navigate('/', { replace: true });
         }
-        return Promise.reject(data.message);
       })
-      .catch(err => alert(err));
+      .catch(err => alert(`Возникла ошибка ${err}`));
 
   }
 
   function handleRegister(formValue) {
     auth.register(formValue.password, formValue.email)
       .then((res) => {
-        if (res.error) {
-          return setMessage(res.error);
-        }
         if (res.data) {
           navigate('/sign-in', { replace: true });
           setRegistered(true);
           return setMessage('Вы успешно зарегистрировались!');
         }
-        return Promise.reject(res);
       })
       .catch(err => {
         setMessage('Что-то пошло не так! Попробуйте еще раз.')
@@ -132,7 +145,7 @@ function App() {
     setEditAvatarPopupOpen(false);
     setInfoTooltipOpen(false);
     setRegistered(false);
-    setSelectedCard({ isOpen: false, link: '#', id: '#', name: '#' });
+    setSelectedCard({});
     setMessage('');
   }
 
@@ -141,7 +154,7 @@ function App() {
 
     api.changeLikeCardStatus(card.id, !isLiked)
       .then(newCard => {
-        setCards(state => state.map(c => c._id === card.id ? newCard : c))
+        setCards(state => state.map(c => c._id === card.id ? newCard : c));
       })
       .catch(err => {
         alert(`Ошибка лайка: ${err}`);
@@ -206,6 +219,7 @@ function App() {
             <div className="page__container">
               <Header />
               <Routes>
+
                 <Route path="/"
                   element={<ProtectedRouteElement element={Main} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />} />
                 <Route path="/sign-up" element={<Register onRegister={handleRegister} />} />

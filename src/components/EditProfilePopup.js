@@ -1,67 +1,64 @@
 import PopupWithForm from "./PopupWithForm";
 import { useState, useContext, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useFormAndValidation } from "../utils/hooks/useFormAndValidation";
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
-  const [name, setName] = useState('Fedor');
-  const [description, setDescription] = useState('Master');
-  const [validationMessageDescription, setValidationMessageDescription] = useState('');
-  const [validationMessageName, setValidationMessageName] = useState('');
-  const [valid, setValid] = useState(false)
+
+  const { values, handleChange, errors, isValid, setValues, resetForm, setIsValid } = useFormAndValidation();
 
   const currentUser = useContext(CurrentUserContext);
 
   const buttonText = isLoading ? 'Сохранение...' : 'Сохранить';
 
   useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-  }, [currentUser]);
-
-  useEffect(() => {
     if (isOpen) {
-      setName(currentUser.name);
-      setDescription(currentUser.about);
-      setValidationMessageName('');
-      setValidationMessageDescription('');
-      setValid(true);
+      resetForm({ ...values, name: currentUser.name, description: currentUser.about }, { ...errors, name: '', about: '' });
+      setIsValid(true);
     }
-  }, [isOpen]);
+  }, [currentUser, isOpen]);
 
-  function handleChangeName(e) {
-    setValid(e.target.closest('form').checkValidity());
-    setValidationMessageName(e.target.validationMessage);
-    setName(e.target.value);
-  }
-
-  function handleChangeDecription(e) {
-    setValid(e.target.closest('form').checkValidity());
-    setValidationMessageDescription(e.target.validationMessage);
-    setDescription(e.target.value);
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!validationMessageName && !validationMessageDescription) {
+    if (isValid) {
       onUpdateUser({
-        name,
-        about: description,
+        name: values.name,
+        about: values.description,
       });
     }
   }
 
   return (
-    <PopupWithForm namePopup='profile' title='Редактировать профиль' isOpen={isOpen} onClose={onClose} buttonText={buttonText} onSubmit={handleSubmit} disabled={!valid}>
+    <PopupWithForm namePopup='profile' title='Редактировать профиль' isOpen={isOpen} onClose={onClose} buttonText={buttonText} onSubmit={handleSubmit} disabled={!isValid}>
       <label className="popup__field">
-        <input value={name} className={`popup__input popup__input_value_name ${validationMessageName ? 'popup__input_type_error' : ''}`} id="name-input" type="text" name="profileName"
-          placeholder="Имя" minLength="2" maxLength="40" onChange={handleChangeName} required />
-        <span className={`popup__input-error name-input-error ${validationMessageName ? 'popup__input-error_active' : ''}`}>{validationMessageName}</span>
+        <input
+          value={values.name}
+          className={`popup__input popup__input_value_name ${errors.name ? 'popup__input_type_error' : ''}`}
+          id="name-input"
+          type="text"
+          name="name"
+          placeholder="Имя"
+          minLength="2"
+          maxLength="40"
+          onChange={handleChange}
+          required />
+        <span className={`popup__input-error name-input-error ${errors.name ? 'popup__input-error_active' : ''}`}>{errors.name}</span>
       </label>
       <label className="popup__field">
-        <input value={description} className={`popup__input popup__input_value_profession ${validationMessageDescription ? 'popup__input_type_error' : ''}`} id="profession-input" type="text"
-          name="profileProfession" placeholder="Профессия" minLength="2" maxLength="200" onChange={handleChangeDecription} required />
-        <span className={`popup__input-error profession-input-error ${validationMessageDescription ? 'popup__input-error_active' : ''}`}>{validationMessageDescription}</span>
+        <input
+          value={values.description}
+          className={`popup__input popup__input_value_profession ${errors.description ? 'popup__input_type_error' : ''}`}
+          id="profession-input"
+          type="text"
+          name="description"
+          placeholder="Профессия"
+          minLength="2"
+          maxLength="200"
+          onChange={handleChange}
+          required />
+        <span className={`popup__input-error profession-input-error ${errors.description ? 'popup__input-error_active' : ''}`}>{errors.description}</span>
       </label>
     </PopupWithForm >
   )

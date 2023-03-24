@@ -1,44 +1,25 @@
 import PopupWithForm from "./PopupWithForm";
 import { useState, useEffect } from "react";
+import { useFormAndValidation } from "../utils/hooks/useFormAndValidation";
 
 function AddPlacePopup({ isOpen, onClose, onAddCard, isLoading }) {
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
-  const [validationMessageName, setValidationMessageName] = useState('');
-  const [validationMessageLink, setValidationMessageLink] = useState('');
-  const [valid, setValid] = useState(false);
+
+  const { values, handleChange, errors, isValid, setValues, resetForm, setIsValid } = useFormAndValidation();
 
   const buttonText = isLoading ? 'Создание...' : 'Создать';
 
   useEffect(() => {
     if (isOpen) {
-      setName('');
-      setLink('');
-      setValidationMessageName('');
-      setValidationMessageLink('');
-      setValid(false);
+      resetForm({ ...values, place: '', url: '' }, { ...errors, place: '', url: '' });
     }
   }, [isOpen]);
-
-  function handleChangeName(e) {
-    setValid(e.target.closest('form').checkValidity());
-    setValidationMessageName(e.target.validationMessage);
-    setName(e.target.value);
-  }
-
-  function handleChangeLink(e) {
-    setValid(e.target.closest('form').checkValidity());
-    setValidationMessageLink(e.target.validationMessage);
-    setLink(e.target.value);
-  }
-
 
   function handleSubmit(e) {
     e.preventDefault();
 
     onAddCard({
-      name,
-      link,
+      name: values.place,
+      link: values.url,
     });
   }
 
@@ -50,32 +31,32 @@ function AddPlacePopup({ isOpen, onClose, onAddCard, isLoading }) {
       onClose={onClose}
       onSubmit={handleSubmit}
       buttonText={buttonText}
-      disabled={!valid}>
+      disabled={!isValid}>
       <label className="popup__field">
         <input
-          value={name}
-          onChange={handleChangeName}
-          className={`popup__input popup__input_value_place  ${validationMessageName ? 'popup__input_type_error' : ''}`}
+          value={values.place}
+          onChange={handleChange}
+          className={`popup__input popup__input_value_place  ${errors.place ? 'popup__input_type_error' : ''}`}
           id="place-input"
           type="text"
-          name="card_place"
+          name="place"
           placeholder="Новое место"
           minLength="2"
           maxLength="30"
           required />
-        <span className={`popup__input-error place-input-error ${validationMessageName ? 'popup__input-error_active' : ''}`}>{validationMessageName}</span>
+        <span className={`popup__input-error place-input-error ${errors.place ? 'popup__input-error_active' : ''}`}>{errors.place}</span>
       </label>
       <label className="popup__field">
         <input
-          value={link}
-          onChange={handleChangeLink}
-          className={`popup__input popup__input_value_url ${validationMessageLink ? 'popup__input_type_error' : ''}`}
+          value={values.url || ''}
+          onChange={handleChange}
+          className={`popup__input popup__input_value_url ${errors.url ? 'popup__input_type_error' : ''}`}
           id="url-input"
           type="url"
-          name="card_url"
+          name="url"
           placeholder="Ссылка на картинку"
           required />
-        <span className={`popup__input-error url-input-error ${validationMessageLink ? 'popup__input-error_active' : ''}`}>{validationMessageLink}</span>
+        <span className={`popup__input-error url-input-error ${errors.url ? 'popup__input-error_active' : ''}`}>{errors.url}</span>
       </label>
     </PopupWithForm>
   )

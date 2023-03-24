@@ -21,6 +21,13 @@ function Header() {
 
   const headerLink = useRoutes([
     {
+      path: "/",
+      element: <div className={`header__menu ${isActiveSidebar ? 'header__menu_active' : ''} `}>
+        <span className="header__email">{contextApp.email}</span>
+        <button className="header__btn-out" type="text" onClick={handleSignOut}>Выйти</button>
+      </div>
+    },
+    {
       path: "/sign-up",
       element: <Link className="header__link" to="/sign-in">Войти</Link>
     },
@@ -32,7 +39,7 @@ function Header() {
 
   return (
     <header className={`header page__header ${isActiveSidebar && contextApp.loggedIn && 'header__sidebar'}`}>
-      <a href="#" className="header__logo"></a>
+      <Link className="header__logo" to={'/'}></Link>
       <button className={`header__toggle-sidebar ${contextApp.loggedIn ? 'header__toggle-sidebar_active' : ''}`} onClick={handleClickBurger}>
         <div className="header__btn">
           <span className={`header__btn-line line-top ${isActiveSidebar ? 'line-top_active' : ''}`} />
@@ -41,10 +48,6 @@ function Header() {
         </div>
       </button>
       {headerLink}
-      {contextApp.loggedIn && <div className={`header__menu ${isActiveSidebar ? 'header__menu_active' : ''} `}>
-        <span className="header__email">{contextApp.email}</span>
-        <button className="header__btn-out" type="text" onClick={handleSignOut}>Выйти</button>
-      </div>}
     </header>
   )
 }

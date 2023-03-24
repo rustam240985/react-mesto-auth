@@ -1,22 +1,22 @@
 import React from 'react';
 
-function PopupWithForm(props) {
+function PopupWithForm({ isOpen, namePopup, onClose, title, buttonText, onSubmit, disabled, children }) {
 
   function closePopup(evt) {
     if (evt.target.classList.contains('popup_opened')) {
-      props.onClose();
+      onClose();
     }
   }
 
   return (
-    <div className={`popup popup-${props.namePopup} ${props.isOpen ? 'popup_opened' : ''}`} onMouseDown={closePopup}>
+    <div className={`popup popup-${namePopup} ${isOpen ? 'popup_opened' : ''}`} onMouseDown={closePopup}>
       <div className="popup__container">
-        <h2 className="popup__title">{props.title}</h2>
-        <form className={`popup__form ${props.namePopup}-form`} name={`${props.namePopup}-form`} onSubmit={props.onSubmit} noValidate>
-          {props.children}
-          <button className={`popup__save ${props.disabled ? 'popup__save_disabled' : ''}`} type="submit" disabled={props.disabled}>{props.buttonText}</button>
+        <h2 className="popup__title">{title}</h2>
+        <form className={`popup__form ${namePopup}-form`} name={`${namePopup}-form`} onSubmit={onSubmit} noValidate>
+          {children}
+          <button className={`popup__save ${disabled ? 'popup__save_disabled' : ''}`} type="submit" disabled={disabled}>{buttonText}</button>
         </form>
-        <button className="popup__close" type="button" aria-label="Закрыть" onClick={props.onClose}></button>
+        <button className="popup__close" type="button" aria-label="Закрыть" onClick={onClose}></button>
       </div>
     </div>
   )
