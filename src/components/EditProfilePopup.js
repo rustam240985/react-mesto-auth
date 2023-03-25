@@ -1,11 +1,11 @@
 import PopupWithForm from "./PopupWithForm";
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { useFormAndValidation } from "../utils/hooks/useFormAndValidation";
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 
-  const { values, handleChange, errors, isValid, setValues, resetForm, setIsValid } = useFormAndValidation();
+  const { values, handleChange, errors, isValid, resetForm, setIsValid } = useFormAndValidation();
 
   const currentUser = useContext(CurrentUserContext);
 
@@ -13,7 +13,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 
   useEffect(() => {
     if (isOpen) {
-      resetForm({ ...values, name: currentUser.name, description: currentUser.about }, { ...errors, name: '', about: '' });
+      resetForm({ ...values, name: currentUser.name, description: currentUser.about },
+        { ...errors, name: '', about: '' });
       setIsValid(true);
     }
   }, [currentUser, isOpen]);

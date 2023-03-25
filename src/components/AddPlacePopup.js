@@ -1,10 +1,10 @@
 import PopupWithForm from "./PopupWithForm";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useFormAndValidation } from "../utils/hooks/useFormAndValidation";
 
 function AddPlacePopup({ isOpen, onClose, onAddCard, isLoading }) {
 
-  const { values, handleChange, errors, isValid, setValues, resetForm, setIsValid } = useFormAndValidation();
+  const { values, handleChange, errors, isValid, resetForm } = useFormAndValidation();
 
   const buttonText = isLoading ? 'Создание...' : 'Создать';
 
@@ -17,10 +17,12 @@ function AddPlacePopup({ isOpen, onClose, onAddCard, isLoading }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    onAddCard({
-      name: values.place,
-      link: values.url,
-    });
+    if (isValid) {
+      onAddCard({
+        name: values.place,
+        link: values.url,
+      });
+    }
   }
 
   return (
@@ -48,7 +50,7 @@ function AddPlacePopup({ isOpen, onClose, onAddCard, isLoading }) {
       </label>
       <label className="popup__field">
         <input
-          value={values.url || ''}
+          value={values.url}
           onChange={handleChange}
           className={`popup__input popup__input_value_url ${errors.url ? 'popup__input_type_error' : ''}`}
           id="url-input"

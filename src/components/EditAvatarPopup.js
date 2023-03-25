@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useFormAndValidation } from "../utils/hooks/useFormAndValidation";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
-  const { values, handleChange, errors, isValid, setValues, resetForm, setIsValid } = useFormAndValidation();
+  const { values, handleChange, errors, isValid, resetForm } = useFormAndValidation();
 
   const buttonText = isLoading ? 'Сохранение...' : 'Сохранить';
 
