@@ -35,7 +35,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
     <PopupWithForm namePopup='profile' title='Редактировать профиль' isOpen={isOpen} onClose={onClose} buttonText={buttonText} onSubmit={handleSubmit} disabled={!isValid}>
       <label className="popup__field">
         <input
-          value={values.name}
+          value={values.name || ''}
           className={`popup__input popup__input_value_name ${errors.name ? 'popup__input_type_error' : ''}`}
           id="name-input"
           type="text"
@@ -49,7 +49,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
       </label>
       <label className="popup__field">
         <input
-          value={values.description}
+          value={values.description || ''}
           className={`popup__input popup__input_value_profession ${errors.description ? 'popup__input_type_error' : ''}`}
           id="profession-input"
           type="text"

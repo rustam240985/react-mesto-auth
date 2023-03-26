@@ -1,24 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from '../utils/hooks/useForm';
 
 const Register = ({ onRegister }) => {
-  const [formValue, setFormValue] = useState({
+
+  const { values, handleChange, setValues } = useForm({
     email: '',
     password: ''
-  })
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegister(formValue);
+    onRegister(values);
   }
 
   return (
@@ -27,8 +20,8 @@ const Register = ({ onRegister }) => {
         Регистрация
       </p>
       <form onSubmit={handleSubmit} className="sign__form">
-        <input className='sign__input' id="email" name="email" type="email" placeholder='Email' value={formValue.email} onChange={handleChange} />
-        <input className='sign__input' id="password" name="password" type="password" placeholder='Пароль' value={formValue.password} onChange={handleChange} />
+        <input className='sign__input' id="email" name="email" type="email" placeholder='Email' value={values.email} onChange={handleChange} />
+        <input className='sign__input' id="password" name="password" type="password" placeholder='Пароль' value={values.password} onChange={handleChange} />
         <button type="submit" className="sign__link">Зарегистрироваться</button>
       </form>
       <div className="sign__sign-in">

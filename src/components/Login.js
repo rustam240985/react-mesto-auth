@@ -1,24 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from '../utils/hooks/useForm';
 
 const Login = ({ onLogin }) => {
 
-  const [formValue, setFormValue] = useState({
+  const { values, handleChange, setValues } = useForm({
     email: '',
     password: ''
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
-
   const handleLogin = (e) => {
     e.preventDefault();
-    onLogin(formValue);
+    onLogin(values);
   }
 
   return (
@@ -27,8 +19,8 @@ const Login = ({ onLogin }) => {
         Вход
       </p>
       <form onSubmit={handleLogin} className="sign__form">
-        <input className='sign__input' required id="email" name="email" type="email" placeholder='Email' value={formValue.email} onChange={handleChange} />
-        <input className='sign__input' required id="password" name="password" type="password" placeholder='Пароль' value={formValue.password} onChange={handleChange} />
+        <input className='sign__input' required id="email" name="email" type="email" placeholder='Email' value={values.email} onChange={handleChange} />
+        <input className='sign__input' required id="password" name="password" type="password" placeholder='Пароль' value={values.password} onChange={handleChange} />
         <button type="submit" className="sign__link">Войти</button>
       </form>
     </div>

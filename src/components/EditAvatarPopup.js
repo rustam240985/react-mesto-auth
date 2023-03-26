@@ -33,7 +33,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
       disabled={!isValid}>
       <label className="popup__field">
         <input
-          value={values.url}
+          value={values.url || ''}
           className={`popup__input popup__input_value_url ${errors.url ? 'popup__input_type_error' : ''}`}
           id="avatar-input" type="url"
           name="url"

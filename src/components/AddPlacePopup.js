@@ -36,7 +36,7 @@ function AddPlacePopup({ isOpen, onClose, onAddCard, isLoading }) {
       disabled={!isValid}>
       <label className="popup__field">
         <input
-          value={values.place}
+          value={values.place || ''}
           onChange={handleChange}
           className={`popup__input popup__input_value_place  ${errors.place ? 'popup__input_type_error' : ''}`}
           id="place-input"
@@ -50,7 +50,7 @@ function AddPlacePopup({ isOpen, onClose, onAddCard, isLoading }) {
       </label>
       <label className="popup__field">
         <input
-          value={values.url}
+          value={values.url || ''}
           onChange={handleChange}
           className={`popup__input popup__input_value_url ${errors.url ? 'popup__input_type_error' : ''}`}
           id="url-input"
